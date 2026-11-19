@@ -1,0 +1,23 @@
+flowchart TD
+    S([Mensagem do usuário]) --> V[validar_entrada<br/><i>vazia · longa · sem sentido</i>]
+    V -- inválida --> F
+    V -- ok --> P[proteger_dados<br/><i>regex: CPF, telefone, e-mail, endereço, nome...<br/>mascara e descarta o texto bruto</i>]
+    P --> M[detectar_manipulacao<br/><i>prompt injection · pedido de ação · meta</i>]
+    M -- manipulação --> RM[responder_manipulacao<br/><i>recusa + fato correto da ficha</i>]
+    M -- pergunta sobre o assistente --> SA[sobre_assistente<br/><i>não é canal oficial</i>]
+    M -- ok --> R[rotear<br/><i>documento + intenção por regras e TF-IDF</i>]
+    R -- fora do escopo / ambígua / saudação --> F
+    R -- regras não reconheceram --> CL[classificar_llm 🤖<br/><i>LLM escolhe a ficha · saída validada</i>]
+    R -- reconhecida --> RE[recuperar<br/><i>trechos literais + regras do caso</i>]
+    CL --> RE
+    RE -- há LLM e resposta normal --> RD[redigir_llm 🤖<br/><i>linguagem simples</i>]
+    RE -- sem LLM --> F
+    RD --> VE[verificar<br/><i>R$, prazos e fichas existem?<br/>senão volta ao extrativo</i>]
+    VE --> F[finalizar<br/><i>fonte + data de verificação + aviso</i>]
+    RM --> F
+    SA --> F
+    F --> E([Resposta])
+    classDef ia fill:#fde7c8,stroke:#c2410c,color:#1d2321;
+    classDef regra fill:#e3efe9,stroke:#0f5c4d,color:#1d2321;
+    class CL,RD ia;
+    class V,P,M,RM,SA,R,RE,VE,F regra;

@@ -1,0 +1,32 @@
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	validar_entrada(validar_entrada)
+	proteger_dados(proteger_dados)
+	detectar_manipulacao(detectar_manipulacao)
+	responder_manipulacao(responder_manipulacao)
+	sobre_assistente(sobre_assistente)
+	rotear(rotear)
+	classificar_llm(classificar_llm)
+	recuperar(recuperar)
+	redigir_llm(redigir_llm)
+	verificar(verificar)
+	finalizar(finalizar)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> validar_entrada;
+	proteger_dados --> detectar_manipulacao;
+	responder_manipulacao --> finalizar;
+	sobre_assistente --> finalizar;
+	classificar_llm --> recuperar;
+	redigir_llm --> verificar;
+	verificar --> finalizar;
+	finalizar --> __end__;
+	validar_entrada -. &nbsp;invalida&nbsp; .-> finalizar;
+	validar_entrada -. &nbsp;ok&nbsp; .-> proteger_dados;
+	detectar_manipulacao -. &nbsp;manipulacao&nbsp; .-> responder_manipulacao;
+	detectar_manipulacao -. &nbsp;meta&nbsp; .-> sobre_assistente;
+	detectar_manipulacao -. &nbsp;ok&nbsp; .-> rotear;
+	rotear -. &nbsp;direto&nbsp; .-> finalizar;
+	rotear -. &nbsp;llm&nbsp; .-> classificar_llm;
+	rotear -. &nbsp;recuperar&nbsp; .-> recuperar;
+	recuperar -. &nbsp;llm&nbsp; .-> redigir_llm;
+	recuperar -. &nbsp;ok&nbsp; .-> finalizar;

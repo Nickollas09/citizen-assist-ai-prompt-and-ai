@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citizen Assist AI · Central do Cidadão de Aurora</title>
+<style>
+  :root{
+    --bg:#f4f1ea; --card:#fffdf8; --ink:#1d2321; --muted:#5d6661; --line:#ddd6c8;
+    --brand:#0f5c4d; --brand-ink:#ffffff; --user:#e3efe9; --warn-bg:#fff3d6; --warn-line:#e0b44c;
+    --focus:#c2410c; --fs:17px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141816; --card:#1c211f; --ink:#ecebe6; --muted:#a3aba6; --line:#323a36;
+      --brand:#5cc4a8; --brand-ink:#0b1310; --user:#24352e; --warn-bg:#3a3020; --warn-line:#a8862f; --focus:#fb923c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141816; --card:#1c211f; --ink:#ecebe6; --muted:#a3aba6; --line:#323a36;
+    --brand:#5cc4a8; --brand-ink:#0b1310; --user:#24352e; --warn-bg:#3a3020; --warn-line:#a8862f; --focus:#fb923c;
+  }
+  *{box-sizing:border-box}
+  html{font-size:var(--fs)}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;line-height:1.55;
+       min-height:100vh;display:flex;flex-direction:column}
+  a{color:var(--brand)}
+  :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  header{background:var(--brand);color:var(--brand-ink);padding:14px 16px}
+  .topo{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .selo{width:40px;height:40px;border-radius:10px;background:var(--brand-ink);color:var(--brand);display:grid;place-items:center;font-weight:800}
+  h1{font-size:1.15rem;margin:0;line-height:1.2}
+  .sub{font-size:.8rem;opacity:.85}
+  .acess{margin-left:auto;display:flex;gap:6px}
+  .acess button{background:transparent;color:var(--brand-ink);border:1px solid currentColor;border-radius:8px;padding:4px 10px;font:inherit;font-size:.85rem;cursor:pointer}
+  .aviso{background:var(--warn-bg);border-bottom:1px solid var(--warn-line);font-size:.82rem;padding:8px 16px;text-align:center}
+  main{flex:1;width:100%;max-width:860px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+  #chat{display:flex;flex-direction:column;gap:12px}
+  .msg{padding:12px 16px;border-radius:14px;max-width:92%;border:1px solid var(--line);background:var(--card);overflow-wrap:anywhere}
+  .msg.user{align-self:flex-end;background:var(--user);border-color:transparent}
+  .msg h3{font-size:1rem;margin:.9em 0 .3em;color:var(--brand)}
+  .msg h3:first-child{margin-top:0}
+  .msg p{margin:.45em 0}
+  .msg ol,.msg ul{margin:.3em 0;padding-left:1.4em}
+  .msg em.fonte{display:block;color:var(--muted);font-size:.85rem;font-style:normal}
+  .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .tag{font-size:.72rem;border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--muted)}
+  .tag.alerta{border-color:var(--warn-line);background:var(--warn-bg);color:var(--ink)}
+  nav.menu{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+  nav.menu h2{font-size:.95rem;margin:0 0 8px}
+  .sugestoes{display:flex;flex-wrap:wrap;gap:8px}
+  .sugestoes button.cat{font-weight:600}
+  .sugestoes button.voltar{border-style:dashed}
+  .sugestoes button{font:inherit;font-size:.85rem;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer}
+  .sugestoes button:hover{border-color:var(--brand)}
+  form{position:sticky;bottom:0;background:var(--bg);padding:10px 0 14px;display:flex;gap:8px}
+  textarea{flex:1;resize:none;font:inherit;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);min-height:52px;max-height:160px}
+  form button{font:inherit;font-weight:600;background:var(--brand);color:var(--brand-ink);border:0;border-radius:12px;padding:0 20px;cursor:pointer}
+  form button:disabled{opacity:.5;cursor:wait}
+  .dica{font-size:.78rem;color:var(--muted);margin:0}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  @media (max-width:560px){ .msg{max-width:100%} .acess{margin-left:0} }
+</style>
+</head>
+<body>
+<header>
+  <div class="topo">
+    <div class="selo" aria-hidden="true">CA</div>
+    <div>
+      <h1>Citizen Assist AI</h1>
+      <div class="sub">Central do Cidadão de Aurora · dúvidas sobre documentos</div>
+    </div>
+    <div class="acess" role="group" aria-label="Acessibilidade">
+      <button type="button" id="menos" aria-label="Diminuir texto">A−</button>
+      <button type="button" id="mais" aria-label="Aumentar texto">A+</button>
+      <button type="button" id="tema" aria-label="Alternar tema claro e escuro">Tema</button>
+    </div>
+  </div>
+</header>
+<div class="aviso" role="note"><strong>Protótipo educacional, não é canal oficial.</strong> As respostas vêm só das fichas da Central do Cidadão de Aurora (fictícia), verificadas em <span id="versao">—</span>. Não digite CPF, nome, endereço, telefone ou outros dados pessoais.</div>
+
+<main>
+  <div id="chat" aria-live="polite" aria-label="Conversa"></div>
+  <nav class="menu" aria-labelledby="titulo-menu">
+    <h2 id="titulo-menu">Escolha um tema</h2>
+    <div class="sugestoes" id="sugestoes"></div>
+  </nav>
+  <form id="form">
+    <label for="q" class="sr">Sua pergunta</label>
+    <textarea id="q" rows="1" placeholder="Ou escreva sua dúvida. Ex.: Perdi meu RG, preciso de BO?" maxlength="600" aria-describedby="dica"></textarea>
+    <button id="enviar">Enviar</button>
+  </form>
+  <p class="dica" id="dica">Enter envia · Shift+Enter quebra linha · Tab navega pelo menu. O assistente não acessa cadastros nem faz agendamentos. Nada do que você escreve é guardado.</p>
+</main>
+
+<script>
+const chat = document.getElementById('chat'), form = document.getElementById('form'),
+      q = document.getElementById('q'), btn = document.getElementById('enviar');
+let contexto = [];          // só códigos de ficha (ex.: ["FC-06"]); nenhum texto do usuário é guardado
+let CATS = [];
+
+function esc(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function inline(s){
+  return esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*]+?)\*/g,'$1<em>$2</em>');
+}
+function md(texto){
+  const out = []; let lista = null;
+  const fecha = () => { if (lista){ out.push(`</${lista}>`); lista = null; } };
+  for (const linha of texto.split('\n')){
+    let m;
+    if (!linha.trim()){ fecha(); continue; }
+    if ((m = linha.match(/^###\s+(.*)/))){ fecha(); out.push(`<h3>${inline(m[1])}</h3>`); continue; }
+    if ((m = linha.match(/^\s*\d+\.\s+(.*)/))){ if (lista!=='ol'){ fecha(); out.push('<ol>'); lista='ol'; } out.push(`<li>${inline(m[1])}</li>`); continue; }
+    if ((m = linha.match(/^\s*-\s+(.*)/))){ if (lista!=='ul'){ fecha(); out.push('<ul>'); lista='ul'; } out.push(`<li>${inline(m[1])}</li>`); continue; }
+    fecha();
+    if ((m = linha.match(/^_(.+)_$/))){ out.push(`<em class="fonte">${inline(m[1])}</em>`); continue; }
+    out.push(`<p>${inline(linha)}</p>`);
+  }
+  fecha(); return out.join('');
+}
+function add(papel, html, meta){
+  const d = document.createElement('div');
+  d.className = 'msg ' + papel; d.innerHTML = html;
+  if (meta) d.appendChild(meta);
+  chat.appendChild(d); d.scrollIntoView({behavior:'smooth', block:'start'});
+  return d;
+}
+function tags(r){
+  const m = document.createElement('div'); m.className = 'meta';
+  const rot = {resposta:'resposta', esclarecimento:'pedido de esclarecimento', sem_informacao:'sem informação nas fichas',
+               recusa:'recusado', saudacao:'saudação', alerta_privacidade:'alerta de privacidade',
+               entrada_invalida:'entrada inválida', sobre_assistente:'sobre o assistente', erro:'erro'};
+  const t = (txt, cls='') => { const s = document.createElement('span'); s.className = 'tag ' + cls; s.textContent = txt; m.appendChild(s); };
+  t(rot[r.tipo] || r.tipo);
+  (r.fontes||[]).forEach(f => t(f));
+  (r.alertas||[]).filter(a => !a.startsWith('llm')).forEach(a => t(a.replace(/_/g,' ').split(':')[0], 'alerta'));
+  if (r.modo === 'generativo') t('redigido por IA e verificado');
+  return m;
+}
+async function perguntar(texto){
+  add('user', `<p>${esc(texto.trim()) || '<em>(mensagem vazia)</em>'}</p>`);
+  q.value = ''; btn.disabled = true;
+  const espera = add('bot', '<p>Consultando as fichas…</p>');
+  try {
+    const r = await fetch('/api/perguntar', {method:'POST', headers:{'Content-Type':'application/json'},
+                          body: JSON.stringify({pergunta: texto, contexto})}).then(x => x.json());
+    if (r.fichas && r.fichas.length) contexto = r.fichas;
+    espera.innerHTML = md(r.texto); espera.appendChild(tags(r));
+  } catch(e){
+    espera.innerHTML = '<p>Não consegui responder agora. Tente de novo em instantes ou escolha um tema no menu.</p>';
+  } finally { btn.disabled = false; q.focus(); }
+}
+form.addEventListener('submit', e => { e.preventDefault(); perguntar(q.value); });
+q.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); perguntar(q.value); } });
+const sug = document.getElementById('sugestoes'), tituloMenu = document.getElementById('titulo-menu');
+function botao(txt, cls, fn){ const b = document.createElement('button'); b.type='button'; b.className = cls||''; b.textContent = txt; b.onclick = fn; sug.appendChild(b); return b; }
+function menuCategorias(foco){
+  sug.innerHTML = ''; tituloMenu.textContent = 'Escolha um tema';
+  CATS.forEach(c => botao(c.nome, 'cat', () => menuOpcoes(c)));
+  if (foco && sug.firstChild) sug.firstChild.focus();
+}
+function menuOpcoes(c){
+  sug.innerHTML = ''; tituloMenu.textContent = c.nome + ': o que você quer saber?';
+  c.opcoes.forEach(o => botao(o.rotulo, '', () => { perguntar(o.pergunta); menuCategorias(); }));
+  botao('← Voltar aos temas', 'voltar', () => menuCategorias(true));
+  sug.firstChild.focus();
+}
+
+// acessibilidade: tamanho de fonte e tema
+const raiz = document.documentElement;
+let fs = 17; try { fs = +localStorage.getItem('ca_fs') || 17; } catch(e) {}
+const aplicaFs = () => { raiz.style.setProperty('--fs', fs + 'px'); try { localStorage.setItem('ca_fs', fs); } catch(e) {} };
+aplicaFs();
+document.getElementById('mais').onclick = () => { fs = Math.min(fs + 2, 25); aplicaFs(); };
+document.getElementById('menos').onclick = () => { fs = Math.max(fs - 2, 13); aplicaFs(); };
+document.getElementById('tema').onclick = () => {
+  const escuro = raiz.dataset.theme ? raiz.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  raiz.dataset.theme = escuro ? 'light' : 'dark';
+};
+
+fetch('/api/menu').then(r => r.json()).then(d => {
+  document.getElementById('versao').textContent = d.versao; CATS = d.categorias; menuCategorias();
+}).catch(() => {});
+add('bot', md('Olá! Eu tiro dúvidas sobre **RG, CPF, título de eleitor, carteira de trabalho, certidões e CNH**. Escolha um tema no menu ou escreva sua pergunta. Toda resposta mostra a ficha usada e a data de verificação. Se a informação não estiver nas fichas, eu aviso em vez de inventar.'));
+</script>
+</body>
+</html>
