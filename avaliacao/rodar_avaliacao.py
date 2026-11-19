@@ -124,8 +124,8 @@ def comparar(nome_juiz: str | None = None) -> str:
     linhas = [f"# Antes (v1, juiz {j1}) × depois (v2, juiz {j2})", "",
               "| # | Tipo | Mensagem | v1 | v2 | Mudou |", "|---|---|---|---|---|---|"]
     for x, y in zip(a, d):
-        mudou = "✅ corrigido" if x["veredito"] != "CORRETO" and y["veredito"] == "CORRETO" else (
-            "❌ regrediu" if x["veredito"] == "CORRETO" and y["veredito"] != "CORRETO" else "")
+        mudou = "corrigido" if x["veredito"] != "CORRETO" and y["veredito"] == "CORRETO" else (
+            "regrediu" if x["veredito"] == "CORRETO" and y["veredito"] != "CORRETO" else "")
         linhas.append(f"| {x['id']} | {x['tipo']} | {x['mensagem']} | {x['veredito']} | {y['veredito']} | {mudou} |")
     ca = sum(r["veredito"] == "CORRETO" for r in a)
     cd = sum(r["veredito"] == "CORRETO" for r in d)

@@ -7,10 +7,10 @@ flowchart TD
     M -- pergunta sobre o assistente --> SA[sobre_assistente<br/><i>não é canal oficial</i>]
     M -- ok --> R[rotear<br/><i>documento + intenção por regras e TF-IDF</i>]
     R -- fora do escopo / ambígua / saudação --> F
-    R -- regras não reconheceram --> CL[classificar_llm 🤖<br/><i>LLM escolhe a ficha · saída validada</i>]
+    R -- regras não reconheceram --> CL[classificar_llm · IA<br/><i>LLM escolhe a ficha · saída validada</i>]
     R -- reconhecida --> RE[recuperar<br/><i>trechos literais + regras do caso</i>]
     CL --> RE
-    RE -- há LLM e resposta normal --> RD[redigir_llm 🤖<br/><i>linguagem simples</i>]
+    RE -- há LLM e resposta normal --> RD[redigir_llm · IA<br/><i>linguagem simples</i>]
     RE -- sem LLM --> F
     RD --> VE[verificar<br/><i>R$, prazos e fichas existem?<br/>senão volta ao extrativo</i>]
     VE --> F[finalizar<br/><i>fonte + data de verificação + aviso</i>]

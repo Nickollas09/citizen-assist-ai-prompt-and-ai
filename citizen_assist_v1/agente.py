@@ -99,7 +99,7 @@ class AgenteCidadao:
         if achados:
             alertas.append("dados_pessoais")
             prefixos.append(
-                f"🔒 **Proteja seus dados:** sua mensagem parece ter dados pessoais ({', '.join(achados)}). "
+                f"**Proteja seus dados:** sua mensagem parece ter dados pessoais ({', '.join(achados)}). "
                 "Não envie esse tipo de informação por chat. Eu não guardei nem usei esses dados. "
                 "A Central do Cidadão não pede dados pessoais por chat ou mensagem (FC-07).")
         # daqui em diante só circula o texto mascarado; o bruto é descartado do estado
@@ -111,7 +111,7 @@ class AgenteCidadao:
         alertas, prefixos = list(s["alertas"]), list(s["prefixos"])
         if av.pedido_acao:
             alertas.append("pedido_de_acao")
-            prefixos.append("ℹ️ Eu não acesso cadastros nem faço consultas, agendamentos ou emissões. "
+            prefixos.append("Eu não acesso cadastros nem faço consultas, agendamentos ou emissões. "
                             "Isso é feito por você no portal da Central do Cidadão ou no balcão. Veja como:")
         return {"manipulacao": av.injecao, "alertas": alertas, "prefixos": prefixos,
                 "saudacao": av.saudacao, "agradecimento": av.agradecimento}

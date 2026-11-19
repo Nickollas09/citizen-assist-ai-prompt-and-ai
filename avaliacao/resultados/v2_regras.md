@@ -1,8 +1,8 @@
 # Golden dataset — versão v2 — juiz: regras
 
-Executado em 19/11/2026 18:31 · agente: sem LLM (extrativo) · juiz: régua determinística
+Executado em 19/11/2026 18:40 · agente: sem LLM (extrativo) · juiz: régua determinística
 
-**Acerto: 26/26 (100%)** · nota média 2.00/2 · aviso presente em 26/26 · tempo médio 2 ms
+**Acerto: 26/26 (100%)** · nota média 2.00/2 · aviso presente em 26/26 · tempo médio 1 ms
 
 | # | Tipo | Mensagem | Veredito | Nota | Fontes | Observação |
 |---|---|---|---|---|---|---|

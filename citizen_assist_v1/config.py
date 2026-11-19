@@ -15,7 +15,7 @@ PADROES = {
     "ollama": {"agente": "llama3.1:8b", "juiz": "qwen2.5:14b"},
 }
 
-AVISO = ("⚠️ *Protótipo educacional: não é um canal oficial. Confirme sempre a informação no site "
+AVISO = ("*Protótipo educacional: não é um canal oficial. Confirme sempre a informação no site "
          "ou no balcão do órgão responsável.*")
 
 MAX_CARACTERES = 500

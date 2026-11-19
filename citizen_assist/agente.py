@@ -107,14 +107,14 @@ class AgenteCidadao:
         if achados:
             alertas.append("dados_pessoais")
             prefixos.append(
-                f"🔒 **Proteja seus dados:** sua mensagem parece ter dados pessoais ({', '.join(achados)}). "
+                f"**Proteja seus dados:** sua mensagem parece ter dados pessoais ({', '.join(achados)}). "
                 "Não envie esse tipo de informação por chat. Eu não guardei nem usei esses dados. "
                 "A Central do Cidadão não pede dados pessoais por chat ou mensagem (FC-07).")
         elif protecao.intencao_de_enviar_dados(bruto):
             achados = ["intenção de enviar"]
             alertas.append("dados_pessoais")
             prefixos.append(
-                "🔒 **Não envie seus dados pessoais aqui.** Eu não preciso de endereço, telefone, CPF ou outros dados "
+                "**Não envie seus dados pessoais aqui.** Eu não preciso de endereço, telefone, CPF ou outros dados "
                 "para tirar dúvidas, e não guardo nada do que você escreve. A Central do Cidadão não pede dados "
                 "pessoais por chat (FC-07).")
         # daqui em diante só circula o texto mascarado; o bruto é descartado do estado
@@ -126,7 +126,7 @@ class AgenteCidadao:
         alertas, prefixos = list(s["alertas"]), list(s["prefixos"])
         if av.pedido_acao:
             alertas.append("pedido_de_acao")
-            prefixos.append("ℹ️ Eu não acesso cadastros e não faço consultas, agendamentos nem emissões. "
+            prefixos.append("Eu não acesso cadastros e não faço consultas, agendamentos nem emissões. "
                             "Isso é feito por você no portal da Central do Cidadão ou no balcão. Veja como:")
         return {"manipulacao": av.injecao, "sobre_assistente": av.sobre_assistente, "pedido_acao": av.pedido_acao,
                 "alertas": alertas, "prefixos": prefixos,

@@ -7,7 +7,7 @@
 
 Agente em **LangGraph** que responde dúvidas sobre RG, CPF, título de eleitor, carteira de trabalho, certidões e CNH usando **somente** as 7 fichas da Central do Cidadão de Aurora (central fictícia, para fins didáticos). Toda resposta cita a ficha e a data de verificação e avisa que o assistente não é um canal oficial.
 
-📄 Relatório com justificativas e resultados: [`docs/relatorio.md`](docs/relatorio.md) · 📓 Notebook executado: [`Citizen_Assist_AI.ipynb`](Citizen_Assist_AI.ipynb)
+Relatório com justificativas e resultados: [`docs/relatorio.md`](docs/relatorio.md) · Notebook executado: [`Citizen_Assist_AI.ipynb`](Citizen_Assist_AI.ipynb)
 
 ![Arquitetura](docs/arquitetura.png)
 

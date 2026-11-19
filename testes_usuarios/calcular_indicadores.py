@@ -35,7 +35,7 @@ def main():
     md = ["# Resultado do teste com usuários", "",
           f"Participantes: **{len(participantes)}** (anônimos: {', '.join(participantes)})", ""]
     if len(participantes) < 5:
-        md += [f"> ⚠️ O enunciado pede pelo menos 5 pessoas; há {len(participantes)}.", ""]
+        md += [f"> Atenção: o enunciado pede pelo menos 5 pessoas; há {len(participantes)}.", ""]
 
     md += ["## Tempo para encontrar a informação", "",
            "| Tarefa | Tempo médio (s) | Mediana (s) | Mín–máx (s) | Concluíram |", "|---|---|---|---|---|"]
